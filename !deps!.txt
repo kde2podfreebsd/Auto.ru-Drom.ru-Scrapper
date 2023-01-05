@@ -1,0 +1,2 @@
+yay xvfb
+yay Xephyr
