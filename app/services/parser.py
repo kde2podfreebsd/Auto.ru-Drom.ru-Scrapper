@@ -60,7 +60,7 @@ class Parser:
     def load_cookie(self, url: str):
         try:
             self.driver.get(url)
-            for cookie in pickle.load(open(f'sessions/{self.service}', 'rb')):
+            for cookie in pickle.load(open(f'../sessions/{self.service}', 'rb')):
                 self.driver.add_cookie(cookie)
             self.driver.get(url)
         except Exception as e:

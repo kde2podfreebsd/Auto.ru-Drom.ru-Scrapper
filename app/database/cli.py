@@ -10,7 +10,7 @@ from models import Advertisement
 bp = Blueprint('commands', __name__)
 
 @bp.cli.command("create_db")
-@click.option('-name', default="geniusAPI")
+@click.option('-name', default="autoparser")
 def create_db(name):
     print("creating db %s " % name)
     conn.drop_all()

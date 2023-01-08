@@ -2,6 +2,11 @@ from typing import Optional
 from selenium.webdriver.common.by import By
 from parser import Parser
 
+import os, sys
+sys.path.insert(1, os.path.join(sys.path[0], '../'))
+from models import Advertisement
+from database import app, conn
+
 class AutoParser(Parser):
     def __init__(self, price: int, debug: Optional[bool] = False):
         Parser.__init__(self, service="auto", debug=debug)
@@ -48,19 +53,30 @@ class AutoParser(Parser):
                             "milage": ad_milage[i],
                             "year": ad_year[i],
                         }
+
+                    print(0)
+
+                    with app.app_context():
+                        app.config.from_pyfile("config.py")
+                        conn.init_app(app)
+
+                        for key, value in self.advertisement.items():
+                            output = Advertisement().create(
+                                href=self.advertisement[key]['href'],
+                                title=self.advertisement[key]['name'],
+                                price=self.advertisement[key]['price'],
+                                details=self.advertisement[key]['details'],
+                                milage=self.advertisement[key]['milage'],
+                                year=self.advertisement[key]['year'],
+                                is_send=False,
+                                service=self.service
+                            )
+                            print(output)
                 else:
                     break
-
-            print(self.advertisement)
-
 
         except Exception as e:
             return e
 
         finally:
             self.close_parser()
-
-
-ap = AutoParser(price=85000, debug=True)
-ap.parse_page()
-print(ap.advertisement)
