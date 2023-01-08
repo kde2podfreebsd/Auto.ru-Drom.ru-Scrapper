@@ -53,6 +53,14 @@ app.config["SQLALCHEMY_DATABASE_URI"] = f"postgresql://root:root@172.29.0.2:5432
 ```
 ##### root:root - user/pass | database_name - должны быть аналогичны в docker-compose.yml
 
+5) Создайте таблицы в бд 
+```.sh
+cd app/database
+python -m flask commands create_db
+```
+
+6) PgAdmin: ``` http://localhost:5050 ```
+
 ---------------------------
 #### Создание сессии с cookie для Auto.ru
 ##### app.services.parser
