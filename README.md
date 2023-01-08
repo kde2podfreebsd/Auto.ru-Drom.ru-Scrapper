@@ -4,7 +4,7 @@
 1) Необходимо сохранение cookie в сессию для обхода re-captcha
 2) Все параметры поиска конфигурируются в url кроме радиуса поиска (радиус конфигурируется в cookie)
 3) На последней странице поиска убирает все объявления с бесконечным поиском не попадающими под поисковый запрос
-```.jshint
+```.js
 const remove = (sel) => document.querySelectorAll(sel).forEach(el => el.remove()); remove(".ListingInfiniteDesktop__snippet");
 ```
 4) При отсутсвии элементов на странице заканчивает парсинг и заносит результат в бд (добавляет новые посты)
@@ -15,17 +15,17 @@ const remove = (sel) => document.querySelectorAll(sel).forEach(el => el.remove()
 ---------------------------
 #### Конфигурация бд
 1) Очистите занятые докер контейнеры через docker-station или мануально
-```.shell
+```.sh
 sudo docker stop $(sudo docker ps -a -q)
 sudo docker rm $(sudo docker ps -a -q)
 ```
 2) Билд и поднятие докера с postgresql и pgAdmin4
-```.shell
+```.sh
  docker-compose -f docker-compose.yml build
  docker-compose -f docker-compose.yml up
 ```
 3) Чекните IP - адресс поднятого докера для соединения с бд
-```.shell
+```.sh
  docker inspect pgdb | grep IPAddress 
  ------------Output-----------------         
 "SecondaryIPAddresses": null,
@@ -33,7 +33,7 @@ sudo docker rm $(sudo docker ps -a -q)
         "IPAddress": "172.29.0.2",
 ```
 4) Измените URI подключения к бд в app.database.app
-```.python
+```.py
 app.config["SQLALCHEMY_DATABASE_URI"] = f"postgresql://root:root@172.29.0.2:5432/{database_name}"
 ```
 ##### root:root - user/pass | database_name - должны быть аналогичны в docker-compose.yml
@@ -41,7 +41,7 @@ app.config["SQLALCHEMY_DATABASE_URI"] = f"postgresql://root:root@172.29.0.2:5432
 ---------------------------
 #### Создание сессии с cookie для Auto.ru
 ##### app.services.parser
-```.python
+```.py
 p = Parser()
 p.create_session(url = <auto.ru search configured url>)
 ```
@@ -55,7 +55,7 @@ Edit in webdriver.py (from webdriver.Firefox) DEFAULT_SERVICE_LOG_PATH to = "log
 
 #### Install deps on your system for virtual display (requires by cli server)
 ##### For arch linux
-```.shell
+```.sh
 yay xvfb
 yay Xephyr
 ```
