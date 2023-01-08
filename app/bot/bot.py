@@ -9,7 +9,7 @@ from telebot import types
 config = load_dotenv()
 bot = telebot.TeleBot(os.getenv("telegram_bot_token"))
 
-chat_ids = [406149871]
+chat_ids = [406149871, 528661452]
 
 off_markup = types.ReplyKeyboardRemove(selective=False)
 
