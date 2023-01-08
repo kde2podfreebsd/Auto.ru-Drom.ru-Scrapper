@@ -6,6 +6,7 @@ import os, sys
 sys.path.insert(1, os.path.join(sys.path[0], '../'))
 from models import Advertisement
 from database import app, conn
+from bot import send_ad
 
 class DromParser(Parser):
     def __init__(self, price: int, debug: Optional[bool] = False):
@@ -55,6 +56,23 @@ class DromParser(Parser):
                         )
                         print(output)
 
+                        ad = Advertisement.query.filter_by(href=key).first()
+
+                        if ad.is_send is False:
+                            send_ad(
+                                href=self.advertisement[key]['href'],
+                                name=self.advertisement[key]['name'],
+                                price=self.advertisement[key]['price'],
+                                details=self.advertisement[key]['details'],
+                                service=self.service
+                            )
+
+                            ad.is_send = True
+                            conn.session.commit()
+
+                        else:
+                            pass
+
                         if output['status'] is False:
                             self.break_status = True
 
@@ -69,3 +87,7 @@ class DromParser(Parser):
 
         finally:
             self.close_parser()
+
+# dp = DromParser(price=85000, debug=True)
+# dp.parse_page()
+# print(dp.advertisement)

@@ -3,9 +3,11 @@ from selenium.webdriver.common.by import By
 from parser import Parser
 
 import os, sys
+
 sys.path.insert(1, os.path.join(sys.path[0], '../'))
 from models import Advertisement
 from database import app, conn
+from bot import send_ad
 
 class AutoParser(Parser):
     def __init__(self, price: int, debug: Optional[bool] = False):
@@ -72,6 +74,25 @@ class AutoParser(Parser):
                                 service=self.service
                             )
                             print(output)
+
+                            ad = Advertisement.query.filter_by(href=key).first()
+
+                            if ad.is_send is False:
+                                send_ad(
+                                    href=self.advertisement[key]['href'],
+                                    name=self.advertisement[key]['name'],
+                                    price=self.advertisement[key]['price'],
+                                    details=self.advertisement[key]['details'],
+                                    service=self.service,
+                                    milage=self.advertisement[key]['milage'],
+                                    year=self.advertisement[key]['year']
+                                )
+
+                                ad.is_send = True
+                                conn.session.commit()
+
+                            else:
+                                pass
                 else:
                     break
 
@@ -80,3 +101,7 @@ class AutoParser(Parser):
 
         finally:
             self.close_parser()
+
+# ap = AutoParser(price=85000, debug=True)
+# ap.parse_page()
+# print(ap.advertisement)
