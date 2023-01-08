@@ -9,5 +9,6 @@ from typing import Optional
 class Advertisement(conn.Model):
     id = conn.Column(conn.Integer, primary_key=True)
 
+
     def __repr__(self):
         return '<Advertisement %r>' % self.id
