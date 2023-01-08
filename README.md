@@ -13,6 +13,21 @@ const remove = (sel) => document.querySelectorAll(sel).forEach(el => el.remove()
 1) Все параметры поиска конфигурируются в url
 2) Скрол страниц идет до первого совпадения объявления с бд
 ---------------------------
+#### Install deps
+1) Make venv
+```.sh
+python -m venv venv
+```
+2) Activate venv
+```.sh
+source venv/bin/activate
+```
+3) Install deps
+```.sh
+pip install -r requirements.txt
+```
+
+---------------------------
 #### Конфигурация бд
 1) Очистите занятые докер контейнеры через docker-station или мануально
 ```.sh
