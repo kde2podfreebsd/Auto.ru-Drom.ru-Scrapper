@@ -22,7 +22,7 @@ p.create_session(url = <auto.ru search configured url>)
 ##### Pass Re-Captcha and configure search radius; Session will be saved in app.sessions.auto
 ---------------------------
 
-#### Edit Selenium webdriver source
+#### Edit Selenium webdriver source for moving geckodriver.log in logs folder (by defualt cant change log dir)
 ```.txt
 Edit in webdriver.py (from webdriver.Firefox) DEFAULT_SERVICE_LOG_PATH to = "logs/geckodriver.log"
 ```
