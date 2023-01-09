@@ -1,4 +1,4 @@
-# Parser_Avito-Auto.ru-Drom.ru-Ula_TgBot
+# Parser Auto.ru, Drom.ru, Telegram Bot
 ---------------------------
 #### Auto.ru:
 1) Необходимо сохранение cookie в сессию для обхода re-captcha
